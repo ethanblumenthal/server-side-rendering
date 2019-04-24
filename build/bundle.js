@@ -7047,10 +7047,14 @@ var _Home2 = _interopRequireDefault(_Home);
 function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
 
 var app = (0, _express2.default)();
+app.use(_express2.default.static('public'));
 
 app.get('/', function (req, res) {
   var content = (0, _server.renderToString)(_react2.default.createElement(_Home2.default, null));
-  res.send(content);
+
+  var html = '<html>\n      <head>\n        <body>\n          <div id="root">' + content + '</div>\n          <script src="bundle.js"></script>\n        </body>\n      </head>\n    </html>';
+
+  res.send(html);
 });
 
 app.listen(3000, function () {
