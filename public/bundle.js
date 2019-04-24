@@ -39625,6 +39625,10 @@ var _UsersListPage = __webpack_require__(483);
 
 var _UsersListPage2 = _interopRequireDefault(_UsersListPage);
 
+var _NotFoundPage = __webpack_require__(487);
+
+var _NotFoundPage2 = _interopRequireDefault(_NotFoundPage);
+
 function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
 
 exports.default = [_extends({}, _App2.default, {
@@ -39634,7 +39638,7 @@ exports.default = [_extends({}, _App2.default, {
   }), _extends({}, _UsersListPage2.default, {
     path: '/users',
     exact: true
-  })]
+  }), _extends({}, _NotFoundPage2.default)]
 })];
 
 /***/ }),
@@ -39865,8 +39869,12 @@ var UserList = function (_Component) {
     value: function render() {
       return _react2.default.createElement(
         'div',
-        null,
-        'Here\'s a big list of users:',
+        { className: 'center-align', style: { marginTop: '200px' } },
+        _react2.default.createElement(
+          'h3',
+          null,
+          'Here\'s a list of users'
+        ),
         _react2.default.createElement(
           'ul',
           null,
@@ -39971,6 +39979,43 @@ exports.default = function () {
     default:
       return state;
   }
+};
+
+/***/ }),
+/* 487 */
+/***/ (function(module, exports, __webpack_require__) {
+
+"use strict";
+
+
+Object.defineProperty(exports, "__esModule", {
+  value: true
+});
+
+var _react = __webpack_require__(7);
+
+var _react2 = _interopRequireDefault(_react);
+
+function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
+
+var NotFoundPage = function NotFoundPage(_ref) {
+  var _ref$staticContext = _ref.staticContext,
+      staticContext = _ref$staticContext === undefined ? {} : _ref$staticContext;
+
+  staticContext.notFound = true;
+  return _react2.default.createElement(
+    'div',
+    { className: 'center-align', style: { marginTop: '200px' } },
+    _react2.default.createElement(
+      'h3',
+      null,
+      'Sorry, page not found'
+    )
+  );
+};
+
+exports.default = {
+  component: NotFoundPage
 };
 
 /***/ })

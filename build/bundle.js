@@ -184,6 +184,10 @@ var _UsersListPage = __webpack_require__(13);
 
 var _UsersListPage2 = _interopRequireDefault(_UsersListPage);
 
+var _NotFoundPage = __webpack_require__(24);
+
+var _NotFoundPage2 = _interopRequireDefault(_NotFoundPage);
+
 function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
 
 exports.default = [_extends({}, _App2.default, {
@@ -193,7 +197,7 @@ exports.default = [_extends({}, _App2.default, {
   }), _extends({}, _UsersListPage2.default, {
     path: '/users',
     exact: true
-  })]
+  }), _extends({}, _NotFoundPage2.default)]
 })];
 
 /***/ }),
@@ -260,7 +264,12 @@ app.get('*', function (req, res) {
   });
 
   Promise.all(promises).then(function () {
-    res.send((0, _renderer2.default)(req, store));
+    var context = {};
+    var content = (0, _renderer2.default)(req, store, context);
+    if (context.notFound) {
+      res.status(404);
+    }
+    res.send(content);
   });
 });
 
@@ -514,8 +523,12 @@ var UserList = function (_Component) {
     value: function render() {
       return _react2.default.createElement(
         'div',
-        null,
-        'Here\'s a big list of users:',
+        { className: 'center-align', style: { marginTop: '200px' } },
+        _react2.default.createElement(
+          'h3',
+          null,
+          'Here\'s a list of users'
+        ),
         _react2.default.createElement(
           'ul',
           null,
@@ -577,13 +590,13 @@ var _Routes2 = _interopRequireDefault(_Routes);
 
 function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
 
-exports.default = function (req, store) {
+exports.default = function (req, store, context) {
   var content = (0, _server.renderToString)(_react2.default.createElement(
     _reactRedux.Provider,
     { store: store },
     _react2.default.createElement(
       _reactRouterDom.StaticRouter,
-      { location: req.path, context: {} },
+      { location: req.path, context: context },
       _react2.default.createElement(
         'div',
         null,
@@ -738,6 +751,43 @@ exports.default = function () {
     default:
       return state;
   }
+};
+
+/***/ }),
+/* 24 */
+/***/ (function(module, exports, __webpack_require__) {
+
+"use strict";
+
+
+Object.defineProperty(exports, "__esModule", {
+  value: true
+});
+
+var _react = __webpack_require__(0);
+
+var _react2 = _interopRequireDefault(_react);
+
+function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
+
+var NotFoundPage = function NotFoundPage(_ref) {
+  var _ref$staticContext = _ref.staticContext,
+      staticContext = _ref$staticContext === undefined ? {} : _ref$staticContext;
+
+  staticContext.notFound = true;
+  return _react2.default.createElement(
+    'div',
+    { className: 'center-align', style: { marginTop: '200px' } },
+    _react2.default.createElement(
+      'h3',
+      null,
+      'Sorry, page not found'
+    )
+  );
+};
+
+exports.default = {
+  component: NotFoundPage
 };
 
 /***/ })
