@@ -438,7 +438,7 @@ var Header = function Header(_ref) {
       { className: 'nav-wrapper' },
       _react2.default.createElement(
         _reactRouterDom.Link,
-        { to: '/', className: 'brand-logo left' },
+        { to: '/', className: 'brand-logo' },
         'React SSR'
       ),
       _react2.default.createElement(
@@ -496,6 +496,8 @@ var _react = __webpack_require__(0);
 
 var _react2 = _interopRequireDefault(_react);
 
+var _reactHelmet = __webpack_require__(28);
+
 function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
 
 var Home = function Home() {
@@ -505,6 +507,16 @@ var Home = function Home() {
     _react2.default.createElement(
       'div',
       { className: 'center-align', style: { marginTop: '200px' } },
+      _react2.default.createElement(
+        _reactHelmet.Helmet,
+        null,
+        _react2.default.createElement(
+          'title',
+          null,
+          'React SSR'
+        ),
+        _react2.default.createElement('meta', { property: 'og:title', content: 'Welcome' })
+      ),
       _react2.default.createElement(
         'h3',
         null,
@@ -539,6 +551,8 @@ var _react = __webpack_require__(0);
 var _react2 = _interopRequireDefault(_react);
 
 var _reactRedux = __webpack_require__(2);
+
+var _reactHelmet = __webpack_require__(28);
 
 var _actions = __webpack_require__(1);
 
@@ -576,11 +590,26 @@ var UserList = function (_Component) {
       });
     }
   }, {
+    key: 'head',
+    value: function head() {
+      return _react2.default.createElement(
+        _reactHelmet.Helmet,
+        null,
+        _react2.default.createElement(
+          'title',
+          null,
+          this.props.users.length + ' Users Loaded'
+        ),
+        _react2.default.createElement('meta', { property: 'og:title', content: 'Users' })
+      );
+    }
+  }, {
     key: 'render',
     value: function render() {
       return _react2.default.createElement(
         'div',
         { className: 'center-align', style: { marginTop: '200px' } },
+        this.head(),
         _react2.default.createElement(
           'h3',
           null,
@@ -632,6 +661,8 @@ var _react2 = _interopRequireDefault(_react);
 
 var _reactRedux = __webpack_require__(2);
 
+var _reactHelmet = __webpack_require__(28);
+
 var _actions = __webpack_require__(1);
 
 var _requireAuth = __webpack_require__(16);
@@ -672,11 +703,26 @@ var AdminsListPage = function (_Component) {
       });
     }
   }, {
+    key: 'head',
+    value: function head() {
+      return _react2.default.createElement(
+        _reactHelmet.Helmet,
+        null,
+        _react2.default.createElement(
+          'title',
+          null,
+          this.props.admins.length + ' Admins Loaded'
+        ),
+        _react2.default.createElement('meta', { property: 'og:title', content: 'Admins' })
+      );
+    }
+  }, {
     key: 'render',
     value: function render() {
       return _react2.default.createElement(
         'div',
         { className: 'center-align', style: { marginTop: '200px' } },
+        this.head(),
         _react2.default.createElement(
           'h3',
           null,
@@ -839,6 +885,8 @@ var _reactRedux = __webpack_require__(2);
 
 var _reactRouterConfig = __webpack_require__(3);
 
+var _reactHelmet = __webpack_require__(28);
+
 var _serializeJavascript = __webpack_require__(20);
 
 var _serializeJavascript2 = _interopRequireDefault(_serializeJavascript);
@@ -864,7 +912,9 @@ exports.default = function (req, store, context) {
     )
   ));
 
-  return '\n    <html>\n      <head>\n        <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/materialize/1.0.0/css/materialize.min.css">\n      </head>\n      <body>\n        <div id="root">' + content + '</div>\n        <script>\n          window.INITIAL_STATE = ' + (0, _serializeJavascript2.default)(store.getState()) + '\n        </script>\n        <script src="bundle.js"></script>\n      </body>\n    </html>\n  ';
+  var helmet = _reactHelmet.Helmet.renderStatic();
+
+  return '\n    <html>\n      <head>\n        ' + helmet.title.toString() + '\n        ' + helmet.meta.toString() + '\n        <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/materialize/1.0.0/css/materialize.min.css">\n      </head>\n      <body>\n        <div id="root">' + content + '</div>\n        <script>\n          window.INITIAL_STATE = ' + (0, _serializeJavascript2.default)(store.getState()) + '\n        </script>\n        <script src="bundle.js"></script>\n      </body>\n    </html>\n  ';
 };
 
 /***/ }),
@@ -1035,6 +1085,12 @@ exports.default = function () {
       return state;
   }
 };
+
+/***/ }),
+/* 28 */
+/***/ (function(module, exports) {
+
+module.exports = require("react-helmet");
 
 /***/ })
 /******/ ]);
