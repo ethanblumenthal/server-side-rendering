@@ -27,11 +27,7 @@ const mapStateToProps = ({ users }) => ({
   users
 })
 
-const loadData = store => {
-  return store.dispatch(fetchUsers())
-}
-
 export default {
   component: connect(mapStateToProps, { fetchUsers })(UserList),
-  loadData
+  loadData: ({ dispatch }) => dispatch(fetchUsers())
 }
